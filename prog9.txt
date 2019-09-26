@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Node
+{
+public:
+  int key;
+  struct Node *left,*right;
+};
+struct Node *newNode(int data)
+{
+    Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->key = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+struct Node *insert(Node *node,int key)
+{
+    if(node == NULL)
+    return newNode(key);
+    
+    if(key<node->key)
+   node->left = insert(node->left,key);
+    else if(key>node->key)
+    node->right = insert(node->right,key);
+    
+    return node;
+}
+ 
+int maxDepth(Node* node)  
+{  
+    if (node == NULL)  
+        return 0;  
+    else
+    {  
+       
+        int lDepth = maxDepth(node->left);  
+        int rDepth = maxDepth(node->right);  
+      
+    
+        if (lDepth > rDepth)  
+            return(lDepth + 1);  
+        else return(rDepth + 1);  
+    }  
+}  
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++)
+    cin>>a[i];
+    
+    struct Node *root = newNode(a[0]) ;
+  
+    for(int i=1;i<n;i++)
+    {
+        
+        insert(root,a[i]);
+    }
+    
+    int d = maxDepth(root);
+    cout<<d<<endl;
+    }
+    return 0;
+}
